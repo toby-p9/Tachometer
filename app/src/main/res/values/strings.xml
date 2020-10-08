@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Tachometer</string>
+    <string name="unit_km_h">km/h</string>
+    <string name="unit_mph">mph</string>
+    <string name="unit_m_s">m/s</string>
+    <string name="speed">42</string>
 </resources>

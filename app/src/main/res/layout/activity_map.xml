@@ -1,9 +1,109 @@
-<?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MapActivity">
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="10dp"
+tools:context=".MapActivity">
+
+
+    <TextView
+        android:id="@+id/textView_max_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/max_speed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.137"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.712" />
+
+
+    <TextView
+        android:id="@+id/textView_max_speed_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_max_speed"
+        app:layout_constraintStart_toEndOf="@+id/textView_max_speed" />
+
+    <TextView
+        android:id="@+id/textView_avg_speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/avg_speed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="@+id/textView_max_speed"
+        app:layout_constraintTop_toBottomOf="@+id/textView_max_speed"
+        app:layout_constraintVertical_bias="0.138" />
+
+
+    <TextView
+        android:id="@+id/textView_avg_speed_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_avg_speed"
+        app:layout_constraintStart_toStartOf="@+id/textView_max_speed_value"
+        app:layout_constraintTop_toBottomOf="@+id/textView_max_speed_value"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button_map_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/map_reset"
+        app:layout_constraintBottom_toBottomOf="@+id/button_map_back"
+        app:layout_constraintEnd_toStartOf="@+id/button_map_save" />
+
+    <Button
+        android:id="@+id/button_map_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/map_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_goneMarginLeft="20dp" />
+
+    <Button
+        android:id="@+id/button_map_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/map_save"
+        app:layout_constraintBottom_toBottomOf="@+id/button_map_back"
+        app:layout_constraintEnd_toStartOf="@+id/button_map_back"
+        app:layout_goneMarginLeft="20dp" />
+
+    <Button
+        android:id="@+id/button_map_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Test"
+        app:layout_constraintBottom_toTopOf="@+id/button_map_back"
+        app:layout_constraintEnd_toEndOf="@+id/button_map_back"
+        app:layout_goneMarginLeft="20dp" />
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="com.example.tachometer.fragmentMap"
+        android:layout_width="318dp"
+        android:layout_height="226dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView_max_speed"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

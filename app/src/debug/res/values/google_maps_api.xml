@@ -1,0 +1,25 @@
+<resources>
+    <!--
+    TODO: Before you run your application, you need a Google Maps API key.
+
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=7E:7F:DD:99:23:E1:E8:2C:2F:6F:CE:D8:34:DB:8A:ED:D9:3B:E2:0A%3Bcom.example.tachometer
+
+    You can also add your credentials to an existing key, using these values:
+
+    Package name:
+    com.example.tachometer
+
+    SHA-1 certificate fingerprint:
+    7E:7F:DD:99:23:E1:E8:2C:2F:6F:CE:D8:34:DB:8A:ED:D9:3B:E2:0A
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="com.google.android.geo.API_KEY" templateMergeStrategy="preserve" translatable="false">AIzaSyBo7J3wgvljXOtCYAAm6a4WUg09C0ZN0zo</string>
+
+</resources>

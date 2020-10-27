@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:gauge="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".Speed_Indicator">
+
+    <TextView
+        android:id="@+id/speed_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/unit_km_h"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/speed" />
+
+    <TextView
+        android:id="@+id/speed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="@+id/speed_unit"
+        app:layout_constraintStart_toStartOf="@+id/speed_unit"
+        app:layout_constraintTop_toBottomOf="@+id/gauge" />
+
+    <de.nitri.gauge.Gauge
+        android:id="@+id/gauge"
+        android:layout_width="wrap_content"
+        android:layout_height="320dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        gauge:labelTextSize="42"
+        gauge:maxValue="200"
+        gauge:minValue="0"
+        gauge:totalNicks="120"
+        gauge:valuePerNick="2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

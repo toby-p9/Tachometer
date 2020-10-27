@@ -1,2 +1,4 @@
+include ':gauge'
 include ':app'
+project(':gauge').projectDir = new File(rootDir, 'Gauge-master/gauge/')
 rootProject.name = "Tachometer"

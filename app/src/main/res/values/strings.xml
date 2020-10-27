@@ -4,9 +4,14 @@
     <string name="unit_mph">mph</string>
     <string name="unit_m_s">m/s</string>
     <string name="speed">42</string>
+    <string name="ActivitySwitch">MapActivity</string>
     <string name="max_speed">Maximum Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="map_reset">RESET</string>
     <string name="map_back">BACK</string>
     <string name="map_save">SAVE</string>
+    <string name="location_expl">We need to access your device location to determine the speed with which you are moving or display your position on a map.</string>
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
+
 </resources>

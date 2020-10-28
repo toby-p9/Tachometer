@@ -12,21 +12,23 @@
         android:id="@+id/speed_unit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:clickable="true"
         android:focusable="true"
         android:text="@string/unit_km_h"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/speed" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/speed"
+        app:layout_constraintStart_toEndOf="@+id/speed"
+        app:layout_constraintTop_toTopOf="@+id/speed" />
 
     <TextView
         android:id="@+id/speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="@string/waiting_for_gps"
         android:textSize="28sp"
-        app:layout_constraintEnd_toEndOf="@+id/speed_unit"
-        app:layout_constraintStart_toStartOf="@+id/speed_unit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gauge" />
 
     <de.nitri.gauge.Gauge

@@ -3,15 +3,22 @@
     <string name="unit_km_h">km/h</string>
     <string name="unit_mph">mph</string>
     <string name="unit_m_s">m/s</string>
-    <string name="speed">42</string>
     <string name="ActivitySwitch">MapActivity</string>
     <string name="max_speed">Maximum Speed</string>
     <string name="avg_speed">Average Speed</string>
     <string name="map_reset">RESET</string>
     <string name="map_back">BACK</string>
     <string name="map_save">SAVE</string>
-    <string name="location_expl">We need to access your device location to determine the speed with which you are moving or display your position on a map.</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
+    <string name="waiting_for_gps">waiting for GPS data</string>
+    <string name="loc_perm_dia_expl">We need to access your device location to determine the speed with which you are moving or display your position on a map.</string>
+    <string name="loc_perm_dia_denied">Please allow permission this time so app is able to function properly</string>
+    <string name="loc_perm_dia_disabled">You have repeatedly denied the location permission in the past. Please go to app settings to allow them.</string>
+    <string name="loc_perm_but_initial">Location permission: checking…</string>
+    <string name="loc_perm_but_pos">Location permission: Granted!</string>
+    <string name="loc_perm_but_neg">Request location permission</string>
+    <string name="loc_perm_but_disabled">Location permission denied.\nGo to settings to enable</string>
+    <string name="loc_perm_map_go_back">Please go back to the main screen to allow location permissions</string>
 
 </resources>

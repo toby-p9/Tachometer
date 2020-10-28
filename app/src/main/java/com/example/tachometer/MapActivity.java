@@ -1,11 +1,12 @@
 package com.example.tachometer;
 
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationProvider;
 import android.os.Bundle;
@@ -18,8 +19,7 @@ import android.content.SharedPreferences;
 import android.location.LocationListener;
 import android.location.LocationManager;
 
-
-
+import static android.widget.Toast.makeText;
 
 public class MapActivity extends AppCompatActivity {
 
@@ -57,7 +57,7 @@ public class MapActivity extends AppCompatActivity {
             if (loc != null) {
                 longitudeGPS = Math.round(loc.getLongitude() * 10000) / 10000.0;
                 latitudeGPS = Math.round(loc.getLatitude() * 10000) / 10000.0;
-                avgSpeed = ((int)loc.getSpeed() + avgSpeed) / 2;
+                avgSpeed = ((int) loc.getSpeed() + avgSpeed) / 2;
                 if (maxSpeed < avgSpeed) {
                     maxSpeed = avgSpeed;
                 }
@@ -76,12 +76,12 @@ public class MapActivity extends AppCompatActivity {
 
         @Override
         public void onProviderDisabled(String provider) {
-            Toast.makeText(getBaseContext(), "Provider : " + provider + " deactivated", Toast.LENGTH_SHORT).show();
+            makeText(getBaseContext(), "Provider : " + provider + " deactivated", Toast.LENGTH_SHORT).show();
         }
 
         @Override
         public void onProviderEnabled(String provider) {
-            Toast.makeText(getBaseContext(), "Provider : " + provider + " activated", Toast.LENGTH_SHORT).show();
+            makeText(getBaseContext(), "Provider : " + provider + " activated", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -89,11 +89,14 @@ public class MapActivity extends AppCompatActivity {
             String statusString = "";
             switch (status) {
                 case LocationProvider.AVAILABLE:
-                    statusString = "available"; break;
+                    statusString = "available";
+                    break;
                 case LocationProvider.OUT_OF_SERVICE:
-                    statusString = "out of service"; break;
+                    statusString = "out of service";
+                    break;
                 case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    statusString = "temporarly unavailable"; break;
+                    statusString = "temporarily unavailable";
+                    break;
             }
 //            Toast.makeText(getBaseContext(), provider + " " + statusString, Toast.LENGTH_SHORT).show();
         }
@@ -114,7 +117,7 @@ public class MapActivity extends AppCompatActivity {
                         if (isLocationEnabled()) {
 //                            Toast.makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
                         } else {
-                            Toast.makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
+                            makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -130,8 +133,6 @@ public class MapActivity extends AppCompatActivity {
             }
         }
     } // runnable
-
-
 
 
     @Override
@@ -201,7 +202,7 @@ public class MapActivity extends AppCompatActivity {
             public void onClick(View v) {
                 savePrefValues();
                 Context context = getApplicationContext();
-                Toast.makeText(context, "Data saved", Toast.LENGTH_SHORT).show();
+                makeText(context, "Data saved", Toast.LENGTH_SHORT).show();
             }
         });
         buttonTest = findViewById(R.id.button_map_test);
@@ -209,11 +210,10 @@ public class MapActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (isLocationEnabled()) {
-                    Toast.makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
+                    makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
+                    makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
         /* location */
@@ -226,13 +226,14 @@ public class MapActivity extends AppCompatActivity {
     } //onCreate
 
 
-
-
-    @SuppressLint("MissingPermission")
     @Override
     protected void onResume() {
         super.onResume();
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 0, locationListener);
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Toast.makeText(getBaseContext(), R.string.loc_perm_map_go_back, Toast.LENGTH_SHORT).show();
+        } else {
+            lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 0, locationListener);
+        }
     }
 
 

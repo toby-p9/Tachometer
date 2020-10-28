@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tachometer</string>
+    <string name="max_speed">Maximalgeschwindigkeit</string>
+    <string name="avg_speed">Durchschnittsgeschwindigkeit</string>
+    <string name="map_reset">Zurücksetzen</string>
+    <string name="map_back">Zurück</string>
+    <string name="map_save">Speichern</string>
+    <string name="waiting_for_gps">warte auf GPS</string>
+    <string name="loc_perm_dia_expl">Tachometer muss die Position Ihres Gerätes abfragen, um die Bewegungsgeschwindigkeit zu ermitteln oder den Standort auf einer Karte anzuzeigen.</string>
+    <string name="loc_perm_dia_denied">Bitte dieses Mal Berechtigung erlauben, sodass die App normal funktionieren kann.</string>
+    <string name="loc_perm_dia_disabled">Sie haben die Ortungs-Berechtigung wiederholt abgelehent. Bitte erlauben Sie sie in den App-Einstellungen.</string>
+    <string name="loc_perm_but_initial">Ortsberechtigung: prüfe...</string>
+    <string name="loc_perm_but_pos">Ortsberechtigung: erteilt!</string>
+    <string name="loc_perm_but_neg">Ortsberechtigung anfordern</string>
+    <string name="loc_perm_but_disabled">Ortsberechtigung abgelehnt.\\nIn Einstellungen aktivierbar.</string>
+    <string name="loc_perm_map_go_back">Bitte Ortsberechtigung am Hauptbildschirm aktivieren.</string>
+    <string name="okay">Okay</string>
+    <string name="night_mode_default">Systemeinstellung verwenden</string>
+    <string name="night_mode_on">Immer an</string>
+    <string name="night_mode_off">Immer aus</string>
+</resources>

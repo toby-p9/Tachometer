@@ -2,7 +2,7 @@ package com.example.tachometer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -16,13 +16,11 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.location.LocationProvider;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements DialogCallback {
 
@@ -30,7 +28,10 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
     Speed_Indicator fragment;
     FragmentManager mgr;
     SharedPreferences prefs;
-    Button locationPerm;
+    AppCompatDelegate mDelegate;
+    Button butLocationPerm;
+    Button butNightMode;
+    DialogNightMode diagNight;
     boolean speed_type_set = false;
     boolean perm_info_shown = false;
 
@@ -48,7 +49,9 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
         setContentView(R.layout.activity_main);
         mgr = getSupportFragmentManager();
         prefs = getSharedPreferences("internal data", MODE_PRIVATE);
-        locationPerm = findViewById(R.id.permissionStatus);
+        mDelegate = AppCompatDelegate.create(this, null);
+        butLocationPerm = findViewById(R.id.butPermissionStatus);
+        butNightMode = findViewById(R.id.butNightMode);
 
         //add button to open MapActivity
         final Intent second_activity = new Intent(this, MapActivity.class);
@@ -61,10 +64,19 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
         });
 
         //add onClickListener for permissions button
-        locationPerm.setOnClickListener(new View.OnClickListener() {
+        butLocationPerm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 permissionRequest();
+            }
+        });
+
+        //add onClickListener for night mode button
+        butNightMode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                diagNight = new DialogNightMode();
+                diagNight.show(mgr, "hey");
             }
         });
 
@@ -98,8 +110,6 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
                 lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
             }
         } //first launch, do nothing
-
-        //here, the GPS data should be fed into the speed gauge to determine the current velocity
     }
 
     @Override
@@ -112,12 +122,12 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
         String permission = Manifest.permission.ACCESS_FINE_LOCATION;
         int status = ContextCompat.checkSelfPermission( this, permission);
         if (status == PackageManager.PERMISSION_GRANTED){
-            locationPerm.setText(R.string.loc_perm_but_pos); //necessary for opening activity with permissions enabled
-            locationPerm.setEnabled(false);
+            butLocationPerm.setText(R.string.loc_perm_but_pos); //necessary for opening activity with permissions enabled
+            butLocationPerm.setEnabled(false);
             return true;
         } else{
-            locationPerm.setText(R.string.loc_perm_but_neg);
-            locationPerm.setEnabled(true);
+            butLocationPerm.setText(R.string.loc_perm_but_neg);
+            butLocationPerm.setEnabled(true);
             return false;
         }
     }
@@ -141,14 +151,14 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
                 if (!prefs.getBoolean("first_launch", true)){ //"never ask"-ed
                     LocationDialogDisabled diag = new LocationDialogDisabled();
                     diag.show(mgr, "hey2");
-                    locationPerm.setEnabled(true);
-                    locationPerm.setText(R.string.loc_perm_but_disabled);
+                    butLocationPerm.setEnabled(true);
+                    butLocationPerm.setText(R.string.loc_perm_but_disabled);
 
                     //make button go to app settings so user can allow permission
                     final Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
                     myAppSettings.addCategory(Intent.CATEGORY_DEFAULT);
                     myAppSettings.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    locationPerm.setOnClickListener(new View.OnClickListener() {
+                    butLocationPerm.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             startActivity(myAppSettings);
@@ -168,12 +178,31 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == Callback_Code && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-            locationPerm.setText(R.string.loc_perm_but_pos);
-            locationPerm.setEnabled(false);
+            butLocationPerm.setText(R.string.loc_perm_but_pos);
+            butLocationPerm.setEnabled(false);
         } else{ //permission not granted
-            locationPerm.setText(R.string.loc_perm_but_neg);
-            locationPerm.setEnabled(true);
+            butLocationPerm.setText(R.string.loc_perm_but_neg);
+            butLocationPerm.setEnabled(true);
         }
+    }
+
+    @Override
+    public void nightMode(int mode){
+        switch(mode) {
+            case 0:
+                //system default
+                mDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case 1:
+                //always on
+                mDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+            case 2:
+                //always off
+                mDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+        }
+        diagNight.dismiss();
     }
 
     private class MyLocationListener implements LocationListener {
@@ -187,16 +216,6 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
                     fragment.setSpeedUnit();
                     speed_type_set = true;
                 }
-
-                /*runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(MainActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MainActivity.this,
-                                "Stao: " + latitudeGPS + " : " + longitudeGPS,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });*/
             }
         }
 

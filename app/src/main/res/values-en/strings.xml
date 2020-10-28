@@ -1,15 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Tachometer</string>
-    <string name="unit_km_h" translatable="false">km/h</string>
-    <string name="unit_mph" translatable="false">mph</string>
-    <string name="unit_m_s" translatable="false">m/s</string>
-    <string name="ActivitySwitch" translatable="false">MapActivity</string>
-    <string name="max_speed">Maximum Speed</string>
-    <string name="avg_speed">Average Speed</string>
+    <string name="max_speed">maximum speed</string>
+    <string name="avg_speed">average speed</string>
     <string name="map_reset">Reset</string>
     <string name="map_back">Back</string>
     <string name="map_save">Save</string>
-    <string name="okay">Okay</string>
     <string name="waiting_for_gps">waiting for GPS</string>
     <string name="loc_perm_dia_expl">Tachometer needs to access your device location to determine the speed with which you are moving or display your position on a map.</string>
     <string name="loc_perm_dia_denied">Please allow permission this time so app is able to function properly</string>
@@ -17,10 +13,10 @@
     <string name="loc_perm_but_initial">Location permission: checking…</string>
     <string name="loc_perm_but_pos">Location permission: granted!</string>
     <string name="loc_perm_but_neg">Request location permission</string>
-    <string name="loc_perm_but_disabled">Location permission denied.\nGo to settings to enable</string>
+    <string name="loc_perm_but_disabled">Location permission denied. Go to settings to enable</string>
     <string name="loc_perm_map_go_back">Please go back to the main screen to allow location permissions</string>
+    <string name="okay">Okay</string>
     <string name="night_mode_default">Use system default</string>
     <string name="night_mode_on">Always on</string>
     <string name="night_mode_off">Always off</string>
-
 </resources>

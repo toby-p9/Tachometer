@@ -16,8 +16,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+
 public class fragmentMap extends Fragment {
 
+    double latitude = 47.2233;
+    double longitude = 8.8173;
+
+    //private static LatLng ownPosition = new LatLng(latitude,longitude);
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
@@ -31,8 +36,8 @@ public class fragmentMap extends Fragment {
          */
         @Override
         public void onMapReady(GoogleMap googleMap) {
-            LatLng myPosition = new LatLng(34, 50);
-            googleMap.addMarker(new MarkerOptions().position(myPosition).title("Marker in Sydney"));
+            LatLng myPosition = new LatLng(47.2233, 8.8173);
+            googleMap.addMarker(new MarkerOptions().position(myPosition).title("Marker of U96"));
             googleMap.moveCamera(CameraUpdateFactory.newLatLng(myPosition));
         }
     };
@@ -43,7 +48,10 @@ public class fragmentMap extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        setPosition();
+        View view = inflater.inflate(R.layout.fragment_map, container, false);
+        return view;
+
     }
 
     @Override
@@ -54,6 +62,12 @@ public class fragmentMap extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+
+    private void setPosition() {
+        MapActivity activity = (MapActivity) getActivity();
+        latitude = activity.getLatitude();
+        longitude = activity.getLongitude();
     }
 
 }

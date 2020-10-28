@@ -2,11 +2,10 @@ package com.example.tachometer;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
+import androidx.fragment.app.Fragment;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationProvider;
 import android.os.Bundle;
@@ -21,14 +20,17 @@ import android.location.LocationManager;
 
 
 
+
 public class MapActivity extends AppCompatActivity {
 
-    int maxSpeed = 100;
-    int avgSpeed = 100;
+    int maxSpeed = 0;
+    int avgSpeed = 0;
     boolean updateUI = true;
-
+    int SLEEP_DURATION = 2000;
     TextView maxSpeedView;
     TextView avgSpeedView;
+    TextView longView;
+    TextView latView;
     Button buttonBack;
     Button buttonReset;
     Button buttonSave;
@@ -37,31 +39,39 @@ public class MapActivity extends AppCompatActivity {
     SharedPreferences prefs;
     String prefsName = "internalData";
     /* Location Stuff */
-    double longitudeGPS, latitudeGPS;
+    double longitudeGPS = 0.0;
+    double latitudeGPS = 0.0;
+    double longitudeOLD = 0.0;
+    double latitudeOLD = 0.0;
+
     LocationManager lm;
     LocationListener locationListener = new MyLocationListener();
+//    String[] permissions = {"android.permission.ACCESS_FINE_LOCATION", "android.permission.ACCESS_COARSE_LOCATION"};
+
     /* UI */
     private Handler mainHandler = new Handler();
 
-
     private class MyLocationListener implements LocationListener {
         @Override
-
         public void onLocationChanged(Location loc) {
             if (loc != null) {
-                longitudeGPS = loc.getLongitude();
-                latitudeGPS = loc.getLatitude();
-
+                longitudeGPS = Math.round(loc.getLongitude() * 10000) / 10000.0;
+                latitudeGPS = Math.round(loc.getLatitude() * 10000) / 10000.0;
+                avgSpeed = ((int)loc.getSpeed() + avgSpeed) / 2;
+                if (maxSpeed < avgSpeed) {
+                    maxSpeed = avgSpeed;
+                }
+                longView.setText(String.valueOf(longitudeGPS));
+                latView.setText(String.valueOf(latitudeGPS));
+                maxSpeedView.setText(String.valueOf(maxSpeed));
+                avgSpeedView.setText(String.valueOf(avgSpeed));
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(MapActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
-                        Toast.makeText(MapActivity.this,
-                                "Stao: " + latitudeGPS + " : " + longitudeGPS,
-                                Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(MapActivity.this, "Network Provider update", Toast.LENGTH_SHORT).show();
                     }
                 });
-             }
+            }
         }
 
         @Override
@@ -79,21 +89,19 @@ public class MapActivity extends AppCompatActivity {
             String statusString = "";
             switch (status) {
                 case LocationProvider.AVAILABLE:
-                    statusString = "available";
+                    statusString = "available"; break;
                 case LocationProvider.OUT_OF_SERVICE:
-                    statusString = "out of service";
+                    statusString = "out of service"; break;
                 case LocationProvider.TEMPORARILY_UNAVAILABLE:
-                    statusString = "temporarly unavailable";
+                    statusString = "temporarly unavailable"; break;
             }
-            Toast.makeText(getBaseContext(), provider + " " + statusString, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getBaseContext(), provider + " " + statusString, Toast.LENGTH_SHORT).show();
         }
-
-
     } // class MyLocationListener
 
 
-    class BackgroundRunnable implements Runnable {
-        BackgroundRunnable() {
+    class BackgroundRunnableProvider implements Runnable {
+        BackgroundRunnableProvider() {
         }
 
         @Override
@@ -103,25 +111,20 @@ public class MapActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         /* checks if provider available */
-                        if (isLocationEnabled()){
-                            Toast.makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
+                        if (isLocationEnabled()) {
+//                            Toast.makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
                         }
-                        /* checks UI update */
-                        // avgSpeed += 1;
-//                        avgSpeedView.setText(String.valueOf(avgSpeed));
                     }
                 });
                 sleep();
             }
-
-
         }
 
         private void sleep() {
             try {
-                Thread.sleep(60* 1000);
+                Thread.sleep(SLEEP_DURATION);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -129,23 +132,50 @@ public class MapActivity extends AppCompatActivity {
     } // runnable
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
 
-        /* Data Persistence */
-        prefs = getSharedPreferences(prefsName, MODE_PRIVATE);
-        readPrefValues();
+        Fragment fragment = new Fragment();
+        Bundle extras = new Bundle();
+        extras.putDouble("lat", latitudeGPS);
+        extras.putDouble("long", longitudeGPS);
+        fragment.setArguments(extras);
 
         /* Intents */
         final Intent go_back_to_main = new Intent(this, MainActivity.class);
 
+        /* Data Persistence */
+        prefs = getSharedPreferences(prefsName, MODE_PRIVATE);
+        readPrefValues();
+
         /* Views */
         maxSpeedView = findViewById(R.id.textView_max_speed_value);
         maxSpeedView.setText(String.valueOf(maxSpeed));
+        maxSpeedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                maxSpeed++;
+                maxSpeedView.setText(String.valueOf(maxSpeed));
+            }
+        });
         avgSpeedView = findViewById(R.id.textView_avg_speed_value);
         avgSpeedView.setText(String.valueOf(avgSpeed));
+        avgSpeedView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                avgSpeed++;
+                avgSpeedView.setText(String.valueOf(avgSpeed));
+            }
+        });
+
+        longView = findViewById(R.id.textView_map_long);
+        longView.setText(String.valueOf(longitudeGPS));
+        latView = findViewById(R.id.textView_map_lat);
+        latView.setText(String.valueOf(latitudeGPS));
 
         /* Buttons */
         buttonBack = findViewById(R.id.button_map_back);
@@ -155,18 +185,16 @@ public class MapActivity extends AppCompatActivity {
                 startActivity(go_back_to_main);
             }
         });
-
         buttonReset = findViewById(R.id.button_map_reset);
         buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                maxSpeed = 0;
                 avgSpeed = 0;
+                maxSpeed = 0;
                 maxSpeedView.setText(String.valueOf(maxSpeed));
                 avgSpeedView.setText(String.valueOf(avgSpeed));
             }
         });
-
         buttonSave = findViewById(R.id.button_map_save);
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,47 +204,37 @@ public class MapActivity extends AppCompatActivity {
                 Toast.makeText(context, "Data saved", Toast.LENGTH_SHORT).show();
             }
         });
-
         buttonTest = findViewById(R.id.button_map_test);
         buttonTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                maxSpeed += +1;
-                maxSpeedView.setText(String.valueOf(maxSpeed));
+                if (isLocationEnabled()) {
+                    Toast.makeText(getBaseContext(), "Provider vorhanden", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Provider nicht vorhanden", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
-
         /* location */
         lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationListener = new MyLocationListener();
 
         /* UI update */
-        BackgroundRunnable runnable = new BackgroundRunnable();
+        BackgroundRunnableProvider runnable = new BackgroundRunnableProvider();         /* check provider */
         new Thread(runnable).start();
-
-
     } //onCreate
 
+
+
+
+    @SuppressLint("MissingPermission")
     @Override
     protected void onResume() {
         super.onResume();
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // requestPermissions( new String[] {permission} , CALLBACK_CODE);
-
-            // here to request the missing permissions, and then overriding
-            // public void onRequestPermissionsResult(int requestCode, String[] permission, int[] grantResults);
-
-
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-
-            return;
-        }
-        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10 * 1000, 0, locationListener);
     }
+
 
     @Override
     protected void onPause() {
@@ -254,5 +272,26 @@ public class MapActivity extends AppCompatActivity {
                 lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
 
+    public double getLatitude() {
+        return latitudeGPS;
+    }
 
-} // class
+    public double getLongitude() {
+        return longitudeGPS;
+    }
+
+    public int calculateSpeed() {
+        double distLong = Math.abs(longitudeGPS - longitudeOLD) * 111000.0;
+        double distLat = Math.abs(latitudeGPS - latitudeOLD) * 111000.0;
+        double temp = Math.sqrt( Math.pow(distLong, 2) + Math.pow(distLat, 2) ) / SLEEP_DURATION * 1000;
+        avgSpeed = (int) temp;
+        longitudeOLD = longitudeGPS;
+        latitudeOLD = latitudeGPS;
+        return avgSpeed ;
+    }
+
+
+} // MapActivity
+
+
+

@@ -98,12 +98,48 @@ tools:context=".MapActivity">
     <fragment
         android:id="@+id/fragment"
         android:name="com.example.tachometer.fragmentMap"
-        android:layout_width="318dp"
-        android:layout_height="226dp"
-        android:layout_marginBottom="32dp"
+        android:layout_width="391dp"
+        android:layout_height="324dp"
         app:layout_constraintBottom_toTopOf="@+id/textView_max_speed"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/textView_map_lat"
+        android:layout_width="130dp"
+        android:layout_height="26dp"
+        android:layout_marginBottom="16dp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/textView_max_speed"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/textView_map_long"
+        android:layout_width="130dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="48dp"
+        android:text=""
+        app:layout_constraintBottom_toBottomOf="@+id/textView_map_lat"
+        app:layout_constraintStart_toEndOf="@+id/textView_map_lat" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Latitude"
+        app:layout_constraintBottom_toTopOf="@+id/textView_map_lat"
+        app:layout_constraintStart_toStartOf="@+id/textView_map_lat" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Longitude"
+        app:layout_constraintBottom_toTopOf="@+id/textView_map_long"
+        app:layout_constraintStart_toStartOf="@+id/textView_map_long" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

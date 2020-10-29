@@ -1,16 +1,11 @@
 package com.example.tachometer;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import de.nitri.gauge.Gauge;
 
 public class Speed_Indicator extends Fragment {
@@ -33,6 +28,7 @@ public class Speed_Indicator extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_speed__indicator, container, false);
+
         txt_speed = view.findViewById(R.id.speed);
         gauge = view.findViewById(R.id.gauge);
         speed_unit = view.findViewById(R.id.speed_unit);

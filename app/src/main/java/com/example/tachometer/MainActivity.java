@@ -236,18 +236,3 @@ public class MainActivity extends AppCompatActivity implements DialogCallback {
 
     } // class MyLocationListener
 }
-/*
-try {
-    Thread.sleep(5* 1000);
-} catch (InterruptedException e) {
-    e.printStackTrace();
-}*/
-
-/*
-(new Handler()).postDelayed(new Runnable() {
-    @Override
-    public void run() {
-        permission_check();
-    }
-}, 5000);
-*/

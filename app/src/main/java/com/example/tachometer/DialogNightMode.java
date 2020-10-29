@@ -26,7 +26,7 @@ public class DialogNightMode extends DialogFragment {
     @Override
     public Dialog onCreateDialog(final Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("Night mode options")
+        builder.setTitle(R.string.diag_night_mode_title)
                 .setItems(R.array.night_mode, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                             callback.nightMode(which);

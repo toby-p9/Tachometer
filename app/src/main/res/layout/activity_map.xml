@@ -128,7 +128,7 @@ tools:context=".MapActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Latitude"
+        android:text="@string/lat"
         app:layout_constraintBottom_toTopOf="@+id/textView_map_lat"
         app:layout_constraintStart_toStartOf="@+id/textView_map_lat" />
 
@@ -137,9 +137,19 @@ tools:context=".MapActivity">
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Longitude"
+        android:text="@string/longitude"
         app:layout_constraintBottom_toTopOf="@+id/textView_map_long"
         app:layout_constraintStart_toStartOf="@+id/textView_map_long" />
+
+    <TextView
+        android:id="@+id/speed_unit_map"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/unit_m_s"
+        app:layout_constraintBottom_toTopOf="@+id/textView_avg_speed_value"
+        app:layout_constraintStart_toEndOf="@+id/textView_max_speed_value"
+        app:layout_constraintTop_toBottomOf="@+id/textView_max_speed_value" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

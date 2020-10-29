@@ -13,10 +13,13 @@
     <string name="loc_perm_but_initial">Ortsberechtigung: prüfe...</string>
     <string name="loc_perm_but_pos">Ortsberechtigung: erteilt!</string>
     <string name="loc_perm_but_neg">Ortsberechtigung anfordern</string>
-    <string name="loc_perm_but_disabled">Ortsberechtigung abgelehnt.\\nIn Einstellungen aktivierbar.</string>
+    <string name="loc_perm_but_disabled">Ortsberechtigung abgelehnt.\n In Einstellungen aktivierbar.</string>
     <string name="loc_perm_map_go_back">Bitte Ortsberechtigung am Hauptbildschirm aktivieren.</string>
     <string name="okay">Okay</string>
     <string name="night_mode_default">Systemeinstellung verwenden</string>
     <string name="night_mode_on">Immer an</string>
     <string name="night_mode_off">Immer aus</string>
+    <string name="lat">Breitengrad</string>
+    <string name="longitude">Längengrad</string>
+    <string name="diag_night_mode_title">Optionen Nachtmodus</string>
 </resources>

@@ -10,13 +10,16 @@
     <string name="max_speed">Vitesse maximale</string>
     <string name="loc_perm_dia_expl">Compteur doit accéder à votre endroit actuel pour déterminer la vitesse avec laquelle vous bougez et pour montrer votre position sur une carte.</string>
     <string name="loc_perm_dia_denied">Svp permettez accès à votre position cette fois-ci pour que l\'application puisse fonctionner correctement</string>
-    <string name="loc_perm_dia_disabled">Vous avez bloqué accès à votre position plusieurs fois.\\nSvp allez dans les réglages pour la permettre.</string>
+    <string name="loc_perm_dia_disabled">Vous avez bloqué accès à votre position plusieurs fois. Svp allez dans les réglages pour la permettre.</string>
     <string name="loc_perm_but_initial">Permission d\'endroit: vérifier...</string>
     <string name="loc_perm_but_pos">Permission d\'endroit: accordée!</string>
     <string name="loc_perm_but_neg">Permettre accès à la position</string>
-    <string name="loc_perm_but_disabled">Permission d\'endroit bloqué.\\nAllez dans réglages pour l\'accorder.</string>
+    <string name="loc_perm_but_disabled">Permission d\'endroit bloqué.\n Allez dans réglages pour l\'accorder.</string>
     <string name="loc_perm_map_go_back">Allez à l\'ecran principal pour accorder permission pour l\'endroit</string>
     <string name="night_mode_on">Toujours</string>
     <string name="night_mode_off">Jamais</string>
     <string name="night_mode_default">Selon réglage du système</string>
+    <string name="lat">Latitude</string>
+    <string name="longitude">Longitude</string>
+    <string name="diag_night_mode_title">Options mode de nuit</string>
 </resources>
